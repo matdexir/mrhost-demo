@@ -21,3 +21,12 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+/backend/lib*
+/backend/__pycache__/
+
+*.py[cod]
+*$py.class
+
+*.so
+*.spec
