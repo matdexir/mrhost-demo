@@ -46,6 +46,7 @@ function App() {
       ...features,
       [event.target.name]: event.target.checked,
     });
+    setCount(hotels.length);
   };
 
   const init = () => {
@@ -141,7 +142,7 @@ function App() {
         </Card>
       </Grid>
       <Grid item xs={9}>
-        <Box style={{ display: "flex", alignItems: "center" }}>
+        <Box style={{ display: "flex", alignItems: "center", width: 1200 }}>
           <Box style={{ display: "flex" }}>
             <Typography variant="h5"> Found {count} results</Typography>
           </Box>
@@ -173,32 +174,24 @@ function App() {
                   features[feature] === true &&
                   item.features[feature] === false
                 ) {
-                  console.log(
-                    "item:" +
-                      item.title +
-                      "->" +
-                      feature +
-                      ":" +
-                      features[feature] +
-                      " vs " +
-                      item.features[feature]
-                  );
                   return false;
                 }
               }
               return true;
             })
             .sort(methods[criteria].method)
-            .map((item) => (
-              <HotelItem
-                city={item.city}
-                name={item.title}
-                review={item.review}
-                price={item.price}
-                description={item.description}
-                features={item.features}
-              />
-            ))}
+            .map((item) => {
+              return (
+                <HotelItem
+                  city={item.city}
+                  name={item.title}
+                  review={item.review}
+                  price={item.price}
+                  description={item.description}
+                  features={item.features}
+                />
+              );
+            })}
         </Stack>
       </Grid>
     </Grid>
