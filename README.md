@@ -24,6 +24,6 @@ Afterwards, in order to install the packages necessary, please run:
 
 To run the simple backend, please run:
 
-### `uvicorn main.py --reload --port 4000`
+### `uvicorn main:app --reload --port 4000`
 
 Note: the port is currently hardcoded but it can be changed if asked.
