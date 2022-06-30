@@ -63,6 +63,10 @@ function App() {
     setCount(hotels.length);
   }, [hotels]);
 
+  useEffect(() => {
+    init();
+  }, []);
+
   const {
     pet_friendly,
     parking,
@@ -73,15 +77,14 @@ function App() {
   } = features;
 
   return (
-    <Grid container spacing={5} m={2}>
+    <Grid container spacing={3} m={2}>
       <Grid item xs={3}>
         <Card>
-          <CardHeader title="Select" />
+          <CardHeader title="Please select your requirements" />
           <CardContent>
             <IconButton
               onClick={() => {
                 setOpen(!open);
-                init();
               }}
             >
               {open ? <ExpandLess /> : <ExpandMore />}

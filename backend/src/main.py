@@ -45,7 +45,7 @@ def create_random_hotels():
             features=hotel_features,
             description=lorem,
             city=cities[random.randint(i, 200) % len(cities)],
-            review=round(random.uniform(0, 5), 2),
+            review=round(random.uniform(1, 5), 2),
             price=random.randint(700, 5000) // 10 * 10,
             title=WORDS[random.randint(0, len(WORDS) - 1)].decode("utf-8"),
         )
