@@ -1,9 +1,12 @@
+import { Card, CardMedia, Chip, Box, Stack, Typography } from "@mui/material";
+import { FmdGood } from "@mui/icons-material";
+
 const Hotel = ({ name, review, city, description, price }) => {
   const grade = (review) => {
-    if (review < 2) return "Bad";
-    else if (review < 3.5) return "Ok";
-    else if (review < 4.5) return "Good";
-    else return "Very Good";
+    if (review < 2) return ["Bad", "error"];
+    else if (review < 3.5) return ["Ok", "warning"];
+    else if (review < 4.5) return ["Good", "success"];
+    else return ["Very Good", "success"];
   };
   return (
     <Card sx={{ width: 900 }}>
@@ -32,8 +35,8 @@ const Hotel = ({ name, review, city, description, price }) => {
             </Box>
             <Box>
               <Box style={{ display: "flex", alignItems: "center" }} m={2}>
-                <Typography mr={1}>{grade(review)}</Typography>
-                <Chip label={review} color="success" />
+                <Typography mr={1}>{grade(review)[0]}</Typography>
+                <Chip label={review} color={grade(review)[1]} />
               </Box>
               <Typography>NT {price}</Typography>
             </Box>
