@@ -3,7 +3,6 @@ import random
 import requests
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
 from schemas.definitions import Hotel, HotelFeatures, Image
 
 word_site = "https://www.mit.edu/~ecprice/wordlist.10000"
@@ -50,7 +49,7 @@ def create_random_hotels():
             price=random.randint(700, 5000) // 10 * 10,
             title=WORDS[random.randint(0, len(WORDS) - 1)].decode("utf-8"),
         )
-        print(hotel)
+        # print(hotel)
         hotels.append(hotel)
     return hotels
 
