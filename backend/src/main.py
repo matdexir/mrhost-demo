@@ -23,7 +23,7 @@ app.add_middleware(
 
 @app.get("/")
 def create_random_hotels():
-    num = random.randint(50, 75)
+    num = random.randint(10, 15)
     cities = ["Taipei", "Taichung", "Tainan", "Kaoshiung", "Taitung"]
     hotels = []
     lorem = """
@@ -45,7 +45,7 @@ def create_random_hotels():
             features=hotel_features,
             description=lorem,
             city=cities[random.randint(i, 200) % len(cities)],
-            review=random.uniform(0, 5),
+            review=round(random.uniform(0, 5), 2),
             price=random.randint(700, 5000) // 10 * 10,
             title=WORDS[random.randint(0, len(WORDS) - 1)].decode("utf-8"),
         )

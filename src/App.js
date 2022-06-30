@@ -24,7 +24,16 @@ function App() {
   const [open, setOpen] = useState(true);
   const [criteria, setCriteria] = useState("city");
   const [hotels, setHotels] = useState([]);
-  const [features, setFeatures] = useState([]);
+  const [count, setCount] = useState(0);
+  const [features, setFeatures] = useState({
+    pet_friendly: false,
+    free_internet: false,
+    smoking_friendly: false,
+    kitchen: false,
+    parking: false,
+    washing_machine: false,
+  });
+
   const methods = {
     city: { method: (a, b) => b.city - a.city },
     review: { method: (a, b) => b.review - a.review },
@@ -33,7 +42,10 @@ function App() {
 
   const handleChange = (event) => {
     // pass
-    console.log(event.target.name);
+    setFeatures({
+      ...features,
+      [event.target.name]: event.target.checked,
+    });
   };
 
   const init = () => {
@@ -46,6 +58,18 @@ function App() {
         console.log(e);
       });
   };
+  useEffect(() => {
+    setCount(hotels.length);
+  }, [hotels]);
+
+  const {
+    pet_friendly,
+    parking,
+    smoking_area,
+    washing_machine,
+    free_internet,
+    kitchen,
+  } = features;
 
   return (
     <Grid container spacing={5} m={2}>
@@ -66,7 +90,7 @@ function App() {
                 <Box style={{ display: "flex", alignItems: "center" }}>
                   <Checkbox
                     checked={pet_friendly}
-                    name="pet-friendly"
+                    name="pet_friendly"
                     onChange={handleChange}
                   />
                   Pet-friendly
@@ -74,18 +98,18 @@ function App() {
                 <Box style={{ display: "flex", alignItems: "center" }}>
                   <Checkbox
                     checked={free_internet}
-                    name="free-internet"
+                    name="free_internet"
                     onChange={handleChange}
                   />
                   Free internet
                 </Box>
                 <Box style={{ display: "flex", alignItems: "center" }}>
                   <Checkbox
-                    checked={smoking_friendly}
-                    name="smoking-friendly"
+                    checked={smoking_area}
+                    name="smoking_area"
                     onChange={handleChange}
                   />
-                  Smoking-Friendly
+                  Smoking-Area
                 </Box>
                 <Box style={{ display: "flex", alignItems: "center" }}>
                   <Checkbox
@@ -98,7 +122,7 @@ function App() {
                 <Box style={{ display: "flex", alignItems: "center" }}>
                   <Checkbox
                     checked={washing_machine}
-                    name="washing-machine"
+                    name="washing_machine"
                     onChange={handleChange}
                   />
                   Washing Machine
@@ -119,7 +143,7 @@ function App() {
       <Grid item xs={9}>
         <Box style={{ display: "flex", alignItems: "center" }}>
           <Box style={{ display: "flex" }}>
-            <Typography variant="h5"> Found {hotels.length} results</Typography>
+            <Typography variant="h5"> Found {count} results</Typography>
           </Box>
           <Box sx={{ marginLeft: "auto" }}>
             <FormControl sx={{ m: 1, minWidth: 120, float: "right" }}>
@@ -144,8 +168,23 @@ function App() {
         <Stack direction="column" spacing={5}>
           {hotels
             .filter((item) => {
-              for (let feature in features) {
-                if (item.features[feature] === false) return false;
+              for (const feature in features) {
+                if (
+                  features[feature] === true &&
+                  item.features[feature] === false
+                ) {
+                  console.log(
+                    "item:" +
+                      item.title +
+                      "->" +
+                      feature +
+                      ":" +
+                      features[feature] +
+                      " vs " +
+                      item.features[feature]
+                  );
+                  return false;
+                }
               }
               return true;
             })
@@ -157,6 +196,7 @@ function App() {
                 review={item.review}
                 price={item.price}
                 description={item.description}
+                features={item.features}
               />
             ))}
         </Stack>

@@ -1,7 +1,8 @@
 import { Card, CardMedia, Chip, Box, Stack, Typography } from "@mui/material";
 import { FmdGood } from "@mui/icons-material";
 
-const Hotel = ({ name, review, city, description, price }) => {
+const Hotel = ({ name, review, city, description, price, features }) => {
+  const feats = Object.entries(features);
   const grade = (review) => {
     if (review < 2) return ["Bad", "error"];
     else if (review < 3.5) return ["Ok", "warning"];
@@ -9,7 +10,7 @@ const Hotel = ({ name, review, city, description, price }) => {
     else return ["Very Good", "success"];
   };
   return (
-    <Card sx={{ width: 900 }}>
+    <Card sx={{ width: 1200 }}>
       <Stack direction="row">
         <CardMedia
           component="img"
@@ -32,6 +33,13 @@ const Hotel = ({ name, review, city, description, price }) => {
                 {city}
               </Typography>
               <Typography variant="body1">{description}</Typography>
+              <Stack direction="row" spacing={1} mt={1}>
+                {feats.map((feat) => {
+                  if (feat[1] === true) {
+                    return <Chip label={feat[0]} color={"success"} />;
+                  }
+                })}
+              </Stack>
             </Box>
             <Box>
               <Box style={{ display: "flex", alignItems: "center" }} m={2}>
