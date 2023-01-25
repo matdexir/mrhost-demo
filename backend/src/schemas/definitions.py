@@ -17,11 +17,21 @@ class Image(BaseModel):
     name: Optional[str]
 
 
+class HotelCapabilities(BaseModel):
+    short_stay: Optional[bool]
+    self_health_management: Optional[bool]
+    business_trip: Optional[bool]
+    presidential_suite: Optional[bool]
+    family_stay: Optional[bool]
+
+
 class Hotel(BaseModel):
     image: Image
     title: str
     city: str
     description: str
     review: float
+    comments: int
     price: int
     features: HotelFeatures
+    capabilities: HotelCapabilities

@@ -3,7 +3,7 @@ import random
 import requests
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from schemas.definitions import Hotel, HotelFeatures, Image
+from schemas.definitions import Hotel, HotelCapabilities, HotelFeatures, Image
 
 word_site = "https://www.mit.edu/~ecprice/wordlist.10000"
 
@@ -31,7 +31,8 @@ def create_random_hotels():
         minim sint cillum sint consectetur cupidatat.
     """
     for i in range(num):
-        image = Image(url="https://placekitten.com/300/300/", name="Image")
+        name = "image_" + str(num)
+        image = Image(url="https://placekitten.com/300/150/", name=name)
         hotel_features = HotelFeatures(
             free_internet=(random.randint(0, 100) % 2 == 0),
             smoking_area=(random.randint(0, 100) % 2 == 0),
@@ -40,14 +41,25 @@ def create_random_hotels():
             parking=(random.randint(0, 100) % 2 == 0),
             pet_friendly=(random.randint(0, 100) % 2 == 0),
         )
+
+        hotel_capabilities = HotelCapabilities(
+            family_stay=(random.randint(0, 100) % 2 == 0),
+            short_stay=(random.randint(0, 100) % 2 == 0),
+            self_health_management=(random.randint(0, 100) % 2 == 0),
+            business_trip=(random.randint(0, 100) % 2 == 0),
+            presidential_suite=(random.randint(0, 100) % 2 == 0),
+        )
+
         hotel = Hotel(
             image=image,
             features=hotel_features,
             description=lorem,
             city=cities[random.randint(i, 200) % len(cities)],
             review=round(random.uniform(1, 5), 2),
+            comments=random.randint(50, 10000),
             price=random.randint(700, 5000) // 10 * 10,
             title=WORDS[random.randint(0, len(WORDS) - 1)].decode("utf-8"),
+            capabilities=hotel_capabilities,
         )
         # print(hotel)
         hotels.append(hotel)
